@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+
 import logo from '../../assets/logo.png';
 import jira from '../../assets/jira.png';
 import './Popup.css';
+
 import Toggle from '../../components/Toggle';
 
 const Popup = () => {
@@ -33,8 +35,6 @@ const Popup = () => {
           ? 'enableLanguageDetection'
           : 'disableLanguageDetection',
       });
-
-      console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -52,6 +52,7 @@ const Popup = () => {
         checked={isLanguageDetectionEnabled}
         onClick={toggleLanguageDetection}
       />
+      <p className="version">Version 0.1.2 (Beta)</p>
     </div>
   );
 };
