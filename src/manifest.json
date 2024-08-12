@@ -3,14 +3,10 @@
   "name": "Jira Amplifier",
   "version": "0.1.2",
   "description": "Boost Jira productivity for Helpdesk dispatchers",
-  "options_page": "options.html",
   "background": { "service_worker": "background.bundle.js" },
   "action": {
     "default_popup": "popup.html",
     "default_icon": "icon-48.png"
-  },
-  "chrome_url_overrides": {
-    "newtab": "newtab.html"
   },
   "permissions": ["activeTab", "storage"],
   "icons": {
@@ -25,7 +21,6 @@
       "css": ["content.styles.css"]
     }
   ],
-  "devtools_page": "devtools.html",
   "web_accessible_resources": [
     {
       "resources": [
