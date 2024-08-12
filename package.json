@@ -1,7 +1,7 @@
 {
   "name": "jira-amplifier",
-  "version": "0.0.1",
-  "description": "A chrome extension boosting Jira productivity for Kaercher Helpdesk",
+  "version": "0.1.2",
+  "description": "Boost Jira productivity for Helpdesk dispatchers",
   "license": "MIT",
   "repository": {
     "type": "git",
