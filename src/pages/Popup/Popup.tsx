@@ -5,17 +5,18 @@ import './Popup.css';
 import Toggle from '../../components/Toggle';
 
 const Popup = () => {
-  const [isEnabled, setIsEnabled] = useState(false);
+  const [isLanguageDetectionEnabled, setIsLanguageDetectionEnabled] =
+    useState(false);
 
   useEffect(() => {
     chrome.storage.local.get('ja_languageDetection', (data) => {
-      setIsEnabled(data.ja_languageDetection || false);
+      setIsLanguageDetectionEnabled(data.ja_languageDetection || false);
     });
   }, []);
 
   const toggleLanguageDetection = async () => {
-    const newState = !isEnabled;
-    setIsEnabled(newState);
+    const newState = !isLanguageDetectionEnabled;
+    setIsLanguageDetectionEnabled(newState);
 
     chrome.storage.local.set({ ja_languageDetection: newState });
 
@@ -46,7 +47,11 @@ const Popup = () => {
         <img src={logo} alt="logo" />
         <h1>Jira Amplifier</h1>
       </header>
-      <Toggle label="Language Detection" onClick={toggleLanguageDetection} />
+      <Toggle
+        label="Language Detection"
+        checked={isLanguageDetectionEnabled}
+        onClick={toggleLanguageDetection}
+      />
     </div>
   );
 };
