@@ -45,14 +45,12 @@ const detectLanguage = () => {
 
 const styleParagraph = (paragraph) => {
   const text = paragraph.textContent;
-  if (!text) return;
+  if (!text || text.startsWith('ITSM')) return;
 
   const language = franc(text, { only: ['eng', 'deu'], minLength: 5 });
   if (!language) return;
 
-  paragraph.style.color = `${
-    language === 'eng' ? '#34c759' : language === 'deu' ? '#ff3b30' : '#6e6e6e'
-  }`;
+  paragraph.style.color = `${language === 'deu' ? '#6e6e6e' : '#34c759'}`;
 };
 
 const observeNewParagraphs = () => {
