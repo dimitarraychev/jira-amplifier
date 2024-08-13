@@ -51,7 +51,9 @@ const Popup = () => {
         checked={isLanguageDetectionEnabled}
         onClick={toggleLanguageDetection}
       />
-      <p className="version">Version 0.1.2 (Beta)</p>
+      <footer className="App-footer">
+        <p className="version">Version 0.1.3 (Beta)</p>
+      </footer>
     </div>
   );
 };
