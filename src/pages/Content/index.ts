@@ -1,3 +1,5 @@
+console.log('content script works with ts');
+
 import { franc } from 'franc-min';
 
 let languageDetection = false;
@@ -33,7 +35,9 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 });
 
 const detectLanguage = () => {
-  const paragraphs = document.querySelectorAll('.issue-link');
+  const paragraphs = document.querySelectorAll(
+    '.issue-link'
+  ) as NodeListOf<HTMLElement>;
 
   if (!languageDetection) {
     paragraphs.forEach((paragraph) => (paragraph.style.color = '#6e6e6e'));
@@ -43,7 +47,7 @@ const detectLanguage = () => {
   paragraphs.forEach((paragraph) => styleParagraph(paragraph));
 };
 
-const styleParagraph = (paragraph) => {
+const styleParagraph = (paragraph: HTMLElement) => {
   const text = paragraph.textContent;
   if (!text || text.startsWith('ITSM')) return;
 
@@ -65,10 +69,13 @@ const observeNewParagraphs = () => {
     mutations.forEach((mutation) => {
       if (mutation.addedNodes.length > 0) {
         mutation.addedNodes.forEach((node) => {
-          const isValidNode =
-            node.nodeType === Node.ELEMENT_NODE && node.matches('.issue-link');
+          if (node.nodeType === Node.ELEMENT_NODE) {
+            const element = node as Element;
 
-          if (isValidNode) styleParagraph(node);
+            if (element.matches('.issue-link')) {
+              styleParagraph(element as HTMLParagraphElement);
+            }
+          }
         });
       }
     });
