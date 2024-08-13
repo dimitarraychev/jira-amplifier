@@ -16,7 +16,10 @@
   },
   "content_scripts": [
     {
-      "matches": ["http://*/*", "https://*/*", "<all_urls>"],
+      "matches": [
+        "https://taskbox.kaercher.com/projects/ITSM/queues/*",
+        "file:///"
+      ],
       "js": ["contentScript.bundle.js"],
       "css": ["content.styles.css"],
       "run_at": "document_idle"
