@@ -2,45 +2,64 @@ import { Actions } from '../../constants/actions';
 import { addLanguageTag, removeLanguageTags } from '../../utils/dom';
 
 let languageDetection = false;
-let tableObserver: MutationObserver;
+let observer: MutationObserver | null = null;
 
 const startObserver = () => {
-  const tableContainer = document.querySelector('.queue-react-table-container');
-  if (!tableContainer) {
-    console.warn('Target div not found. MutationObserver not initialized.');
-    return;
-  }
+  const container = document.body;
 
-  tableObserver = new MutationObserver((mutations) => {
+  if (observer) observer.disconnect();
+
+  observer = new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {
       if (mutation.addedNodes.length > 0) {
         mutation.addedNodes.forEach((node) => {
           if (node.nodeType === Node.ELEMENT_NODE) {
+            if (!languageDetection) return;
+
             const element = node as Element;
+
             if (element.matches('.issue-link')) {
               addLanguageTag(element as HTMLElement);
             }
+
+            element.querySelectorAll('.issue-link').forEach((descendant) => {
+              addLanguageTag(descendant as HTMLElement);
+            });
           }
         });
       }
     });
   });
 
-  tableObserver.observe(tableContainer, {
+  observer.observe(container, {
     childList: true,
     subtree: true,
   });
 };
 
-chrome.storage.local.get('ja_languageDetection', (data) => {
-  languageDetection = data.ja_languageDetection || false;
+const handleDetection = () => {
+  const paragraphs = document.querySelectorAll(
+    '.issue-link'
+  ) as NodeListOf<HTMLElement>;
 
-  startObserver();
+  if (paragraphs.length === 0) {
+    console.log('No paragraphs found. Waiting for dynamic content...');
 
-  if (languageDetection) {
+    setTimeout(detectLanguage, 1000);
+  } else {
     detectLanguage();
   }
-});
+};
+
+const initialize = () => {
+  chrome.storage.local.get('ja_languageDetection', (data) => {
+    languageDetection = data.ja_languageDetection || false;
+
+    startObserver();
+    handleDetection();
+  });
+};
+initialize();
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (!(request.action in Actions)) {
