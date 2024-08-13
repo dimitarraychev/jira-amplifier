@@ -94,7 +94,7 @@ const styleParagraph = (paragraph: HTMLElement) => {
   const language = franc(text, { only: ['eng', 'deu'], minLength: 5 });
 
   const langTag = document.createElement('span');
-  langTag.textContent = `[${language.toUpperCase()}]`;
+  langTag.textContent = `[${language.slice(0, 2).toUpperCase()}]`;
   langTag.style.color = `${language === 'deu' ? '#ff3b30' : '#34c759'}`;
 
   paragraph.insertBefore(langTag, paragraph.firstChild);
