@@ -73,7 +73,7 @@ const detectLanguage = () => {
 
   if (!languageDetection) {
     paragraphs.forEach((paragraph) => {
-      paragraph.style.color = '#6e6e6e';
+      removeLangTags(paragraph);
     });
     return;
   }
@@ -89,7 +89,22 @@ const styleParagraph = (paragraph: HTMLElement) => {
 
   if (!text || ticketNumRegex.test(text)) return;
 
+  removeLangTags(paragraph);
+
   const language = franc(text, { only: ['eng', 'deu'], minLength: 5 });
 
-  paragraph.style.color = `${language === 'deu' ? '#6e6e6e' : '#34c759'}`;
+  const langTag = document.createElement('span');
+  langTag.textContent = `[${language.toUpperCase()}]`;
+  langTag.style.color = `${language === 'deu' ? '#ff3b30' : '#34c759'}`;
+
+  paragraph.insertBefore(langTag, paragraph.firstChild);
+};
+
+const removeLangTags = (paragraph: HTMLElement) => {
+  const spans = paragraph.querySelectorAll('span');
+  spans.forEach((span) => {
+    if (span.textContent && span.textContent.startsWith('[')) {
+      paragraph.removeChild(span);
+    }
+  });
 };
