@@ -1,6 +1,7 @@
-console.log('content script works with ts');
+console.log('content script works with actions');
 
 import { franc } from 'franc-min';
+import { Actions } from '../../constants/actions';
 
 let languageDetection = false;
 let tableObserver = new MutationObserver(() => {});
@@ -15,16 +16,15 @@ chrome.storage.local.get('ja_languageDetection', (data) => {
 });
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  const actions = ['enableLanguageDetection', 'disableLanguageDetection'];
-  if (!actions.includes(request.action)) {
+  if (!(request.action in Actions)) {
     sendResponse({ success: false });
     return true;
   }
 
-  if (request.action === actions[0]) {
+  if (request.action === Actions[0]) {
     languageDetection = true;
     observeNewParagraphs();
-  } else if (request.action === actions[1]) {
+  } else if (request.action === Actions[1]) {
     languageDetection = false;
     tableObserver.disconnect();
   }

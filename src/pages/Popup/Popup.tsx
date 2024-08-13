@@ -5,6 +5,7 @@ import jira from '../../assets/jira.png';
 import './Popup.css';
 
 import Toggle from '../../components/Toggle';
+import { Actions } from '../../constants/actions';
 
 const Popup = () => {
   const [isLanguageDetectionEnabled, setIsLanguageDetectionEnabled] =
@@ -31,9 +32,7 @@ const Popup = () => {
       if (!tab?.id) return;
 
       const response = await chrome.tabs.sendMessage(tab.id, {
-        action: newState
-          ? 'enableLanguageDetection'
-          : 'disableLanguageDetection',
+        action: newState ? Actions[0] : Actions[1],
       });
     } catch (error) {
       console.log(error);
