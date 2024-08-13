@@ -18,7 +18,7 @@
     {
       "matches": [
         "https://taskbox.kaercher.com/projects/ITSM/queues/*",
-        "file:///"
+        "file:///*"
       ],
       "js": ["contentScript.bundle.js"],
       "css": ["content.styles.css"],
