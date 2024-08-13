@@ -1,12 +1,9 @@
-console.log('content script works with ts');
-
 import { franc } from 'franc-min';
 import { Actions } from '../../constants/actions';
 
 let languageDetection = false;
 let tableObserver: MutationObserver;
 
-// Function to initialize and start observing the table
 const startObserver = () => {
   const tableContainer = document.querySelector('.queue-react-table-container');
   if (!tableContainer) {
@@ -35,11 +32,9 @@ const startObserver = () => {
   });
 };
 
-// Initialize language detection and observer based on stored value
 chrome.storage.local.get('ja_languageDetection', (data) => {
   languageDetection = data.ja_languageDetection || false;
 
-  // Start observing the table regardless of language detection being on or off
   startObserver();
 
   if (languageDetection) {
@@ -59,7 +54,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     languageDetection = false;
   }
 
-  // Trigger language detection immediately after toggling the setting
   detectLanguage();
 
   sendResponse({ success: true });
