@@ -6,6 +6,7 @@ import './Popup.css';
 
 import Toggle from '../../components/Toggle';
 import { Actions } from '../../constants/actions';
+import { StorageKeys } from '../../constants/storageKeys';
 
 const Popup = () => {
   return (
@@ -18,15 +19,15 @@ const Popup = () => {
 
       <Toggle
         label="Language Detection"
-        storageKey="ja_languageDetection"
+        storageKey={StorageKeys.languageDetection}
         enabledAction={Actions.enableLanguageDetection}
         disabledAction={Actions.disableLanguageDetection}
       />
       <Toggle
         label="DXC Layer 2 Tags"
-        storageKey="ja_languageDetection"
-        enabledAction={Actions.enableLanguageDetection}
-        disabledAction={Actions.disableLanguageDetection}
+        storageKey={StorageKeys.layerTwoTags}
+        enabledAction={Actions.enableLayerTwoTags}
+        disabledAction={Actions.disableLayerTwoTags}
       />
 
       <footer className="App-footer">

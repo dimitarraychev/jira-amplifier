@@ -1,4 +1,5 @@
 import { Actions } from '../../constants/actions';
+import { StorageKeys } from '../../constants/storageKeys';
 import { addLanguageTag, removeLanguageTags } from '../../utils/dom';
 
 let languageDetection = false;
@@ -52,8 +53,8 @@ const handleDetection = () => {
 };
 
 const initialize = () => {
-  chrome.storage.local.get('ja_languageDetection', (data) => {
-    languageDetection = data.ja_languageDetection || false;
+  chrome.storage.local.get(StorageKeys.languageDetection, (data) => {
+    languageDetection = data[StorageKeys.languageDetection] || false;
 
     startObserver();
     handleDetection();
