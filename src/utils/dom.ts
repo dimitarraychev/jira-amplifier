@@ -9,6 +9,7 @@ export const addLanguageTag = (paragraph: HTMLElement) => {
   removeLanguageTags(paragraph);
 
   const language = franc(text, { only: ['eng', 'deu'], minLength: 5 });
+  if (language === 'und') return;
 
   const langTag = document.createElement('span');
   langTag.textContent = `[${language.slice(0, 2).toUpperCase()}]`;
