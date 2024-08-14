@@ -1,8 +1,14 @@
 import { Actions } from '../../constants/actions';
 import { StorageKeys } from '../../constants/storageKeys';
-import { addLanguageTag, removeLanguageTags } from '../../utils/dom';
+import {
+  addLanguageTag,
+  addLayerTwoTag,
+  removeLanguageTags,
+  removeLayerTwoTag,
+} from '../../utils/dom';
 
 let languageDetection = false;
+let layerTwoTags = false;
 let observer: MutationObserver | null = null;
 
 const startObserver = () => {
@@ -15,17 +21,23 @@ const startObserver = () => {
       if (mutation.addedNodes.length > 0) {
         mutation.addedNodes.forEach((node) => {
           if (node.nodeType === Node.ELEMENT_NODE) {
-            if (!languageDetection) return;
-
             const element = node as Element;
 
-            if (element.matches('.issue-link')) {
-              addLanguageTag(element as HTMLElement);
+            if (languageDetection) {
+              if (element.matches('.issue-link')) {
+                addLanguageTag(element as HTMLElement);
+              }
+
+              // element.querySelectorAll('.issue-link').forEach((descendant) => {
+              //   addLanguageTag(descendant as HTMLElement);
+              // });
             }
 
-            element.querySelectorAll('.issue-link').forEach((descendant) => {
-              addLanguageTag(descendant as HTMLElement);
-            });
+            if (layerTwoTags) {
+              if (element.matches('[id^="assignee"]')) {
+                addLayerTwoTag(element as HTMLElement);
+              }
+            }
           }
         });
       }
@@ -52,16 +64,6 @@ const handleDetection = () => {
   }
 };
 
-const initialize = () => {
-  chrome.storage.local.get(StorageKeys.languageDetection, (data) => {
-    languageDetection = data[StorageKeys.languageDetection] || false;
-
-    startObserver();
-    handleDetection();
-  });
-};
-initialize();
-
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (!(request.action in Actions)) {
     sendResponse({ success: false });
@@ -71,13 +73,21 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   switch (request.action) {
     case Actions.enableLanguageDetection:
       languageDetection = true;
+      detectLanguage();
       break;
     case Actions.disableLanguageDetection:
       languageDetection = false;
+      detectLanguage();
+      break;
+    case Actions.enableLayerTwoTags:
+      layerTwoTags = true;
+      manageLayerTwoTags();
+      break;
+    case Actions.disableLayerTwoTags:
+      layerTwoTags = false;
+      manageLayerTwoTags();
       break;
   }
-
-  detectLanguage();
 
   sendResponse({ success: true });
   return true;
@@ -99,3 +109,35 @@ const detectLanguage = () => {
     addLanguageTag(paragraph);
   });
 };
+
+const manageLayerTwoTags = () => {
+  const elements = document.querySelectorAll(
+    '[id^="assignee"]'
+  ) as NodeListOf<HTMLElement>;
+
+  if (!layerTwoTags) {
+    elements.forEach((element) => {
+      removeLayerTwoTag(element);
+    });
+    return;
+  }
+
+  elements.forEach((element) => {
+    addLayerTwoTag(element);
+  });
+};
+
+const initialize = () => {
+  chrome.storage.local.get(
+    [StorageKeys.languageDetection, StorageKeys.layerTwoTags],
+    (data) => {
+      languageDetection = data[StorageKeys.languageDetection] || false;
+      layerTwoTags = data[StorageKeys.layerTwoTags] || false;
+
+      startObserver();
+      handleDetection();
+      manageLayerTwoTags();
+    }
+  );
+};
+initialize();

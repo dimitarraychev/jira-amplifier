@@ -27,3 +27,19 @@ export const removeLanguageTags = (paragraph: HTMLElement) => {
     }
   });
 };
+
+export const addLayerTwoTag = (element: HTMLElement) => {
+  const text = element.textContent;
+  if (!text) return;
+
+  const l2 = ['Dimitar Poydovski', 'Stanislav Petrov', 'Izabela Nikolova'];
+
+  if (l2.includes(text)) {
+    element.textContent = '[L2]' + text;
+  }
+};
+
+export const removeLayerTwoTag = (element: HTMLElement) => {
+  const text = element.textContent;
+  element.textContent = text?.startsWith('[L2]') ? text.slice(4) : text;
+};
