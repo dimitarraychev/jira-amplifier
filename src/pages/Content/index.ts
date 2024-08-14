@@ -67,10 +67,13 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     return true;
   }
 
-  if (request.action === Actions[0]) {
-    languageDetection = true;
-  } else if (request.action === Actions[1]) {
-    languageDetection = false;
+  switch (request.action) {
+    case Actions.enableLanguageDetection:
+      languageDetection = true;
+      break;
+    case Actions.disableLanguageDetection:
+      languageDetection = false;
+      break;
   }
 
   detectLanguage();

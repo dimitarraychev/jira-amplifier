@@ -1,4 +1,6 @@
 export enum Actions {
-  enableLanguageDetection,
-  disableLanguageDetection,
+  enableLanguageDetection = 'enableLanguageDetection',
+  disableLanguageDetection = 'disableLanguageDetection',
+  enableLayerTwoTags = 'enableLayerTwoTags',
+  disableLayerTwoTags = 'disableLayerTwoTags',
 }

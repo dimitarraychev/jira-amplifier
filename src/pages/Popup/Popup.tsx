@@ -19,14 +19,14 @@ const Popup = () => {
       <Toggle
         label="Language Detection"
         storageKey="ja_languageDetection"
-        enabledAction={Actions[0]}
-        disabledAction={Actions[1]}
+        enabledAction={Actions.enableLanguageDetection}
+        disabledAction={Actions.disableLanguageDetection}
       />
       <Toggle
         label="DXC Layer 2 Tags"
         storageKey="ja_languageDetection"
-        enabledAction={Actions[0]}
-        disabledAction={Actions[1]}
+        enabledAction={Actions.enableLanguageDetection}
+        disabledAction={Actions.disableLanguageDetection}
       />
 
       <footer className="App-footer">
