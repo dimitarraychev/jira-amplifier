@@ -24,16 +24,26 @@ const startObserver = () => {
           if (node.nodeType === Node.ELEMENT_NODE) {
             const element = node as Element;
 
-            if (languageDetection && element.matches('.issue-link')) {
-              addLanguageTag(element as HTMLElement);
+            if (languageDetection) {
+              if (element.matches('.issue-link')) {
+                addLanguageTag(element as HTMLElement);
+              }
 
-              // element.querySelectorAll('.issue-link').forEach((descendant) => {
-              //   addLanguageTag(descendant as HTMLElement);
-              // });
+              element.querySelectorAll('.issue-link').forEach((descendant) => {
+                addLanguageTag(descendant as HTMLElement);
+              });
             }
 
-            if (layerTwoTags && element.matches('[id^="assignee"]')) {
-              addLayerTwoTag(element as HTMLElement);
+            if (layerTwoTags) {
+              if (element.matches('[id^="assignee"]')) {
+                addLayerTwoTag(element as HTMLElement);
+              }
+
+              element
+                .querySelectorAll('[id^="assignee"]')
+                .forEach((descendant) => {
+                  addLayerTwoTag(descendant as HTMLElement);
+                });
             }
           }
         });

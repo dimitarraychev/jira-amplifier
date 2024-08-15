@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Jira Amplifier",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Boost Jira productivity for Helpdesk dispatchers",
   "background": { "service_worker": "background.bundle.js" },
   "action": {
