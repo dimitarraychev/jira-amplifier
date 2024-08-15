@@ -31,7 +31,7 @@ const Popup = () => {
       />
 
       <footer className="App-footer">
-        <p className="version">Version 0.2.1 (Beta)</p>
+        <p className="version">Version 0.2.2 (Beta)</p>
       </footer>
     </div>
   );
