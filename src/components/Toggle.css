@@ -59,12 +59,12 @@ input:checked + .slider:before {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 0.5rem;
+  gap: 1rem;
   margin-bottom: 0.5rem;
   width: 100%;
 }
 
 .switch-container p {
   flex: 1;
-  text-align: center;
+  text-align: right;
 }
