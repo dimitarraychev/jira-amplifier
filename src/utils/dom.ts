@@ -1,12 +1,29 @@
 import { franc } from 'franc-min';
 
-export const addLanguageTag = (paragraph: HTMLElement) => {
-  const text = paragraph.textContent;
+export const waitForElementsThenExecute = (
+  selector: string,
+  callback: Function
+) => {
+  const elements = document.querySelectorAll(
+    selector
+  ) as NodeListOf<HTMLElement>;
+
+  if (elements.length === 0) {
+    console.log('No elements found. Waiting for dynamic content...');
+
+    setTimeout(() => waitForElementsThenExecute(selector, callback), 1000);
+  } else {
+    callback();
+  }
+};
+
+export const addLanguageTag = (element: HTMLElement) => {
+  const text = element.textContent;
   const ticketNumRegex = /^[A-Z]{3,5}-\d{6}$/;
 
   if (!text || ticketNumRegex.test(text)) return;
 
-  removeLanguageTags(paragraph);
+  removeLanguageTag(element);
 
   const language = franc(text, { only: ['eng', 'deu'], minLength: 5 });
   if (language === 'und') return;
@@ -15,15 +32,15 @@ export const addLanguageTag = (paragraph: HTMLElement) => {
   langTag.textContent = `[${language.slice(0, 2).toUpperCase()}]`;
   langTag.style.color = `${language === 'deu' ? '#ff3b30' : '#34c759'}`;
 
-  paragraph.insertBefore(langTag, paragraph.firstChild);
+  element.insertBefore(langTag, element.firstChild);
 };
 
-export const removeLanguageTags = (paragraph: HTMLElement) => {
-  const spans = paragraph.querySelectorAll('span');
+export const removeLanguageTag = (element: HTMLElement) => {
+  const spans = element.querySelectorAll('span');
 
   spans.forEach((span) => {
     if (span.textContent && span.textContent.startsWith('[')) {
-      paragraph.removeChild(span);
+      element.removeChild(span);
     }
   });
 };

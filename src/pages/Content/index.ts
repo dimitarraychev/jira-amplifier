@@ -3,8 +3,9 @@ import { StorageKeys } from '../../constants/storageKeys';
 import {
   addLanguageTag,
   addLayerTwoTag,
-  removeLanguageTags,
+  removeLanguageTag,
   removeLayerTwoTag,
+  waitForElementsThenExecute,
 } from '../../utils/dom';
 
 let languageDetection = false;
@@ -23,20 +24,16 @@ const startObserver = () => {
           if (node.nodeType === Node.ELEMENT_NODE) {
             const element = node as Element;
 
-            if (languageDetection) {
-              if (element.matches('.issue-link')) {
-                addLanguageTag(element as HTMLElement);
-              }
+            if (languageDetection && element.matches('.issue-link')) {
+              addLanguageTag(element as HTMLElement);
 
               // element.querySelectorAll('.issue-link').forEach((descendant) => {
               //   addLanguageTag(descendant as HTMLElement);
               // });
             }
 
-            if (layerTwoTags) {
-              if (element.matches('[id^="assignee"]')) {
-                addLayerTwoTag(element as HTMLElement);
-              }
+            if (layerTwoTags && element.matches('[id^="assignee"]')) {
+              addLayerTwoTag(element as HTMLElement);
             }
           }
         });
@@ -50,20 +47,6 @@ const startObserver = () => {
   });
 };
 
-const handleDetection = () => {
-  const paragraphs = document.querySelectorAll(
-    '.issue-link'
-  ) as NodeListOf<HTMLElement>;
-
-  if (paragraphs.length === 0) {
-    console.log('No paragraphs found. Waiting for dynamic content...');
-
-    setTimeout(detectLanguage, 1000);
-  } else {
-    detectLanguage();
-  }
-};
-
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (!(request.action in Actions)) {
     sendResponse({ success: false });
@@ -73,19 +56,19 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   switch (request.action) {
     case Actions.enableLanguageDetection:
       languageDetection = true;
-      detectLanguage();
+      toggleLanguageDetection();
       break;
     case Actions.disableLanguageDetection:
       languageDetection = false;
-      detectLanguage();
+      toggleLanguageDetection();
       break;
     case Actions.enableLayerTwoTags:
       layerTwoTags = true;
-      manageLayerTwoTags();
+      toggleLayerTwoTags();
       break;
     case Actions.disableLayerTwoTags:
       layerTwoTags = false;
-      manageLayerTwoTags();
+      toggleLayerTwoTags();
       break;
   }
 
@@ -93,24 +76,24 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   return true;
 });
 
-const detectLanguage = () => {
-  const paragraphs = document.querySelectorAll(
+const toggleLanguageDetection = () => {
+  const elements = document.querySelectorAll(
     '.issue-link'
   ) as NodeListOf<HTMLElement>;
 
   if (!languageDetection) {
-    paragraphs.forEach((paragraph) => {
-      removeLanguageTags(paragraph);
+    elements.forEach((element) => {
+      removeLanguageTag(element);
     });
     return;
   }
 
-  paragraphs.forEach((paragraph) => {
-    addLanguageTag(paragraph);
+  elements.forEach((element) => {
+    addLanguageTag(element);
   });
 };
 
-const manageLayerTwoTags = () => {
+const toggleLayerTwoTags = () => {
   const elements = document.querySelectorAll(
     '[id^="assignee"]'
   ) as NodeListOf<HTMLElement>;
@@ -135,8 +118,8 @@ const initialize = () => {
       layerTwoTags = data[StorageKeys.layerTwoTags] || false;
 
       startObserver();
-      handleDetection();
-      manageLayerTwoTags();
+      waitForElementsThenExecute('.issue-link', toggleLanguageDetection);
+      waitForElementsThenExecute('[id^="assignee"]', toggleLayerTwoTags);
     }
   );
 };

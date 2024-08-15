@@ -24,7 +24,7 @@ const Popup = () => {
         disabledAction={Actions.disableLanguageDetection}
       />
       <Toggle
-        label="DXC Layer 2 Tags"
+        label="Layer 2 Team Tags"
         storageKey={StorageKeys.layerTwoTags}
         enabledAction={Actions.enableLayerTwoTags}
         disabledAction={Actions.disableLayerTwoTags}
