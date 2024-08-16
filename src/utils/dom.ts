@@ -1,5 +1,3 @@
-import { franc } from 'franc-min';
-
 export const waitForElementsThenExecute = (
   selector: string,
   callback: Function
