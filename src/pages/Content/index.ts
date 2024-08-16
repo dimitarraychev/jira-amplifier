@@ -25,13 +25,15 @@ const startObserver = () => {
             const element = node as Element;
 
             if (languageDetection) {
-              if (element.matches('.issue-link')) {
+              if (element.matches('[id^="reporter"]')) {
                 addLanguageTag(element as HTMLElement);
               }
 
-              element.querySelectorAll('.issue-link').forEach((descendant) => {
-                addLanguageTag(descendant as HTMLElement);
-              });
+              element
+                .querySelectorAll('[id^="reporter"]')
+                .forEach((descendant) => {
+                  addLanguageTag(descendant as HTMLElement);
+                });
             }
 
             if (layerTwoTags) {
@@ -88,7 +90,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
 const toggleLanguageDetection = () => {
   const elements = document.querySelectorAll(
-    '.issue-link'
+    '[id^="reporter"]'
   ) as NodeListOf<HTMLElement>;
 
   if (!languageDetection) {
@@ -128,7 +130,7 @@ const initialize = () => {
       layerTwoTags = data[StorageKeys.layerTwoTags] || false;
 
       startObserver();
-      waitForElementsThenExecute('.issue-link', toggleLanguageDetection);
+      waitForElementsThenExecute('[id^="reporter"]', toggleLanguageDetection);
       waitForElementsThenExecute('[id^="assignee"]', toggleLayerTwoTags);
     }
   );

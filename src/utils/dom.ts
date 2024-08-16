@@ -18,29 +18,35 @@ export const waitForElementsThenExecute = (
 };
 
 export const addLanguageTag = (element: HTMLElement) => {
-  const text = element.textContent;
-  const ticketNumRegex = /^[A-Z]{3,5}-\d{6}$/;
-
-  if (!text || ticketNumRegex.test(text)) return;
+  const reporter = element.getAttribute('rel');
+  if (!reporter) return;
+  const row = element.closest('tr');
+  if (!row) return;
+  const issueLink = row.querySelectorAll('.issue-link')[2];
+  if (!issueLink) return;
 
   removeLanguageTag(element);
 
-  const language = franc(text, { only: ['eng', 'deu'], minLength: 5 });
-  if (language === 'und') return;
+  const prefixes = ['AW', 'DE', 'VZ', 'VD', 'PT', 'OS', 'IL', 'BT', 'CH'];
+  const matchesPrefix = prefixes.some((prefix) => reporter.startsWith(prefix));
 
   const langTag = document.createElement('span');
-  langTag.textContent = `[${language.slice(0, 2).toUpperCase()}]`;
-  langTag.style.color = `${language === 'deu' ? '#ff3b30' : '#34c759'}`;
+  langTag.textContent = `${matchesPrefix ? '[DE]' : '[EN]'}`;
+  langTag.style.color = `${matchesPrefix ? '#ff3b30' : '#34c759'}`;
 
-  element.insertBefore(langTag, element.firstChild);
+  issueLink.insertBefore(langTag, issueLink.firstChild);
 };
 
 export const removeLanguageTag = (element: HTMLElement) => {
-  const spans = element.querySelectorAll('span');
+  const row = element.closest('tr');
+  if (!row) return;
+  const issueLink = row.querySelectorAll('.issue-link')[2];
+  if (!issueLink) return;
+  const spans = issueLink.querySelectorAll('span');
 
   spans.forEach((span) => {
     if (span.textContent && span.textContent.startsWith('[')) {
-      element.removeChild(span);
+      issueLink.removeChild(span);
     }
   });
 };
