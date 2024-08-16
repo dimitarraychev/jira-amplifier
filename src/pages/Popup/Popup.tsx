@@ -9,12 +9,15 @@ import { Actions } from '../../constants/actions';
 import { StorageKeys } from '../../constants/storageKeys';
 
 const Popup = () => {
+  const title = 'Jira Amplifier';
+  const version = '0.3.1 (Beta)';
+
   return (
     <div className="App">
       <header className="App-header">
         <img src={jira} alt="logo" />
         <img src={logo} alt="logo" />
-        <h1>Jira Amplifier</h1>
+        <h1>{title}</h1>
       </header>
 
       <Toggle
@@ -31,7 +34,14 @@ const Popup = () => {
       />
 
       <footer className="App-footer">
-        <p className="version">Version 0.2.3 (Beta)</p>
+        <a
+          href="https://draychev.web.app/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Author
+        </a>
+        <p className="version">Version: {version}</p>
       </footer>
     </div>
   );
