@@ -2,7 +2,7 @@
 
 **A chrome extension developed to assist Helpdesk dispatchers in Jira.**
 
-![Extension Screenshot](https://imagizer.imageshack.com/img924/230/k0CfD5.png)
+![Extension Screenshot](https://drive.google.com/uc?id=1h-SuTZxpiSMIw83FoHm1GsvxI2Zla6Ad)
 
 ## Table of Contents
 
@@ -17,15 +17,16 @@
 
 ## Introduction
 
-Jira Amplifier is a Chrome extension developed to assist Helpdesk dispatchers in Jira in their daily tasks. It helps users differentiate English from German ticket in just a brief look.
+Jira Amplifier is a Chrome extension developed to assist Helpdesk dispatchers in Jira in their daily tasks.
 
 ## Features
 
 - Feature 1: Language detection and higlighting
+- Feature 2: Layer 2 team highlighting
 
 ## Installation
 
-Alternatively, you can manually load the extension:
+You can manually load the extension:
 
 1. Clone or download this repository.
 2. Open Chrome and go to `chrome://extensions/`.
@@ -36,7 +37,7 @@ Alternatively, you can manually load the extension:
 
 1. After installation, the extension is available in the extensions menu.
 2. You can pin the extension to your browser for easy access.
-3. THe extensions popup contain different toggle for each functionality.
+3. THe extensions popup contain different toggles for each corresponding functionality.
 
 ## Permissions
 
