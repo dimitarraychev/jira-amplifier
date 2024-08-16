@@ -21,8 +21,8 @@ Jira Amplifier is a Chrome extension developed to assist Helpdesk dispatchers in
 
 ## Features
 
-- Feature 1: Language detection and higlighting
-- Feature 2: Layer 2 team highlighting
+- Language Detection: Checks if tickets are opened by a English or German user and highlights the title accordingly with colored tags.
+- Layer 2 Team Tags: Checks if the tickets are currently assigned to layer 2 agents and adds a tag to their name.
 
 ## Installation
 
