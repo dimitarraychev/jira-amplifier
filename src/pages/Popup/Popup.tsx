@@ -18,6 +18,7 @@ const Popup = () => {
         <img src={jira} alt="logo" />
         <img src={logo} alt="logo" />
         <h1>{title}</h1>
+        <p className="subheading">Boost your productivity</p>
       </header>
 
       <Toggle
