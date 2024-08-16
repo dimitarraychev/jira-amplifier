@@ -7,9 +7,7 @@ export const waitForElementsThenExecute = (
   ) as NodeListOf<HTMLElement>;
 
   if (elements.length === 0) {
-    console.log('No elements found. Waiting for dynamic content...');
-
-    setTimeout(() => waitForElementsThenExecute(selector, callback), 1000);
+    setTimeout(() => waitForElementsThenExecute(selector, callback), 3000);
   } else {
     callback();
   }
