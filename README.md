@@ -17,7 +17,7 @@
 
 ## Introduction
 
-Jira Amplifier is a Chrome extension developed to assist Helpdesk dispatchers in Jira in their daily tasks.
+Jira Amplifier is a Chrome extension developed to assist Helpdesk dispatchers in Jira in their daily tasks by making it easier to differentiate between English and German tickets. There's also a feature for highlighting tickets assigned to the layer 2 team.
 
 ## Features
 
