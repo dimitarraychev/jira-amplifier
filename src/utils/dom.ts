@@ -23,7 +23,19 @@ export const addLanguageTag = (element: HTMLElement) => {
 
   removeLanguageTag(element);
 
-  const prefixes = ['AW', 'DE', 'VZ', 'VD', 'PT', 'OS', 'IL', 'BT', 'CH'];
+  const prefixes = [
+    'AW',
+    'DE',
+    'VZ',
+    'VD',
+    'PT',
+    'AT',
+    'GI',
+    'OS',
+    'IL',
+    'BT',
+    'CH',
+  ];
   const matchesPrefix = prefixes.some((prefix) => reporter.startsWith(prefix));
 
   const langTag = document.createElement('span');
