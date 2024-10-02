@@ -51,13 +51,13 @@ const startObserver = () => {
 
             if (bannerRemoval) {
               if (element.matches('#announcement-banner')) {
-                toggleBannerRemoval;
+                toggleBannerRemoval();
               }
 
               element
                 .querySelectorAll('#announcement-banner')
                 .forEach((descendant) => {
-                  toggleBannerRemoval;
+                  toggleBannerRemoval();
                 });
             }
           }
