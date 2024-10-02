@@ -2,7 +2,7 @@
 
 **A browser extension designed to streamline tasks for Helpdesk dispatchers in Jira.**
 
-![Extension Screenshot](https://drive.google.com/uc?id=1h-SuTZxpiSMIw83FoHm1GsvxI2Zla6Ad)
+![Extension Screenshot](https://github.com/dimitarraychev/jira-amplifier/raw/main/src/assets/preview.png)
 
 ## Table of Contents
 
