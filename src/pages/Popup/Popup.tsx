@@ -10,7 +10,7 @@ import { StorageKeys } from '../../constants/storageKeys';
 
 const Popup = () => {
   const title = 'Jira Amplifier';
-  const version = '0.3.1 (Beta)';
+  const version = '0.4.1 (Beta)';
 
   return (
     <div className="App">
@@ -32,6 +32,12 @@ const Popup = () => {
         storageKey={StorageKeys.layerTwoTags}
         enabledAction={Actions.enableLayerTwoTags}
         disabledAction={Actions.disableLayerTwoTags}
+      />
+      <Toggle
+        label="Remove Banner"
+        storageKey={StorageKeys.bannerRemoval}
+        enabledAction={Actions.removeBanner}
+        disabledAction={Actions.showBanner}
       />
 
       <footer className="App-footer">
