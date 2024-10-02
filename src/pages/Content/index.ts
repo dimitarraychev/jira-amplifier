@@ -10,6 +10,7 @@ import {
 
 let languageDetection = false;
 let layerTwoTags = false;
+let bannerRemoval = false;
 let observer: MutationObserver | null = null;
 
 const startObserver = () => {
@@ -47,6 +48,18 @@ const startObserver = () => {
                   addLayerTwoTag(descendant as HTMLElement);
                 });
             }
+
+            if (bannerRemoval) {
+              if (element.matches('#announcement-banner')) {
+                toggleBannerRemoval;
+              }
+
+              element
+                .querySelectorAll('#announcement-banner')
+                .forEach((descendant) => {
+                  toggleBannerRemoval;
+                });
+            }
           }
         });
       }
@@ -81,6 +94,14 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     case Actions.disableLayerTwoTags:
       layerTwoTags = false;
       toggleLayerTwoTags();
+      break;
+    case Actions.removeBanner:
+      bannerRemoval = true;
+      toggleBannerRemoval();
+      break;
+    case Actions.showBanner:
+      bannerRemoval = false;
+      toggleBannerRemoval();
       break;
   }
 
@@ -122,16 +143,29 @@ const toggleLayerTwoTags = () => {
   });
 };
 
+const toggleBannerRemoval = () => {
+  const banner = document.getElementById('announcement-banner') as HTMLElement;
+  if (!bannerRemoval) return;
+
+  banner.remove();
+};
+
 const initialize = () => {
   chrome.storage.local.get(
-    [StorageKeys.languageDetection, StorageKeys.layerTwoTags],
+    [
+      StorageKeys.languageDetection,
+      StorageKeys.layerTwoTags,
+      StorageKeys.bannerRemoval,
+    ],
     (data) => {
       languageDetection = data[StorageKeys.languageDetection] || false;
       layerTwoTags = data[StorageKeys.layerTwoTags] || false;
+      bannerRemoval = data[StorageKeys.bannerRemoval] || false;
 
       startObserver();
       waitForElementsThenExecute('[id^="reporter"]', toggleLanguageDetection);
       waitForElementsThenExecute('[id^="assignee"]', toggleLayerTwoTags);
+      waitForElementsThenExecute('#announcement-banner', toggleBannerRemoval);
     }
   );
 };
