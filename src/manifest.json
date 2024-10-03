@@ -16,11 +16,8 @@
   "content_scripts": [
     {
       "matches": [
-        "https://taskbox.kaercher.com/projects/ITSM/queues/*",
-        "https://taskbox.karcher.com/projects/ITSM/queues/*",
-        "https://taskbox.kaercher.com/browse/*",
-        "https://taskbox.karcher.com/browse/*",
-        "file:///*"
+        "https://taskbox.kaercher.com/*",
+        "https://taskbox.karcher.com/*"
       ],
       "js": ["contentScript.bundle.js"],
       "css": ["content.styles.css"],
