@@ -10,7 +10,7 @@ import { StorageKeys } from '../../constants/storageKeys';
 
 const Popup = () => {
   const title = 'Jira Amplifier';
-  const version = '0.4.2 (Beta)';
+  const version = '0.4.3 (Beta)';
 
   return (
     <div className="App">

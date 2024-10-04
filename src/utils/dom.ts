@@ -7,7 +7,7 @@ export const waitForElementsThenExecute = (
   ) as NodeListOf<HTMLElement>;
 
   if (elements.length === 0) {
-    setTimeout(() => waitForElementsThenExecute(selector, callback), 3000);
+    setTimeout(() => waitForElementsThenExecute(selector, callback), 1000);
   } else {
     callback();
   }

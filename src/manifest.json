@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Jira Amplifier",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "description": "Boost Jira productivity for Helpdesk dispatchers",
   "action": {
     "default_popup": "popup.html",
@@ -17,7 +17,9 @@
     {
       "matches": [
         "https://taskbox.kaercher.com/*",
-        "https://taskbox.karcher.com/*"
+        "https://taskbox.karcher.com/*",
+        "https://smartbox.kaercher.com/*",
+        "https://smartbox.karcher.com/*"
       ],
       "js": ["contentScript.bundle.js"],
       "css": ["content.styles.css"],
