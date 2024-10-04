@@ -144,10 +144,17 @@ const toggleLayerTwoTags = () => {
 };
 
 const toggleBannerRemoval = () => {
-  const banner = document.getElementById('announcement-banner') as HTMLElement;
   if (!bannerRemoval) return;
 
-  banner.remove();
+  const taskboxBanner = document.getElementById(
+    'announcement-banner'
+  ) as HTMLElement;
+  const smartboxBanner = document.getElementById(
+    'header-precursor'
+  ) as HTMLElement;
+
+  taskboxBanner && taskboxBanner.remove();
+  smartboxBanner && smartboxBanner.remove();
 };
 
 const initialize = () => {
@@ -165,7 +172,7 @@ const initialize = () => {
       startObserver();
       waitForElementsThenExecute('[id^="reporter"]', toggleLanguageDetection);
       waitForElementsThenExecute('[id^="assignee"]', toggleLayerTwoTags);
-      waitForElementsThenExecute('#announcement-banner', toggleBannerRemoval);
+      toggleBannerRemoval();
     }
   );
 };
